@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "artista4.jpeg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

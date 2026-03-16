@@ -9,3 +9,4 @@ struct MyApp: App {
         .defaultSize(width:1200, height:750)
     }
 }
+

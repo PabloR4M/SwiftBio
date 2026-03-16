@@ -16,8 +16,7 @@ struct ContentView: View {
                 .tabItem{
                     Label("Gustitos", systemImage: "bookmark.circle")
                 }
-            
-            .frame(width: 100, height: 700)
+                
         }
         
     }
