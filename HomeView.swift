@@ -8,7 +8,8 @@ struct HomeView: View{
                     .resizable()
                     .scaledToFit()
                     .clipShape(Circle())
-                    .overlay(Circle().stroke(Color(red: 0.1, green: 0.1, blue: 0.5), style: StrokeStyle(lineWidth: 15)))
+                    .padding(12)
+                    .overlay(Circle().stroke(Color(red: 0.3, green: 0.1, blue: 0.5), style: StrokeStyle(lineWidth: 15)))
                     .frame(width: 200, height: 200)
                     .padding(50)
                 
@@ -23,7 +24,7 @@ struct HomeView: View{
                             .foregroundColor(.white)
                             .padding(.horizontal, 14)
                             .padding(.vertical, 6)
-                            .background(Color(red: 0.1, green: 0.1, blue: 0.5))
+                            .background(Color(red: 0.3, green: 0.1, blue: 0.5))
                             .cornerRadius(45)
                     }
                     
