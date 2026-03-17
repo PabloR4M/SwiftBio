@@ -4,13 +4,20 @@ struct FavoriteView: View{
     //carrusel automatico
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
     
-    @State private var juegoActual = 0
+    @State private var juegoActual = 1
+    @State private var libroActual = 1
     
     let listaJuegos = [
         ("Resident Evil CV", "juego1"), ("Resident Evil 7", "juego2"), ("Cyberpunk 2077", "juego3"),
         ("Gow Chains of Olympus", "juego4"), ("Assassins Creed II","juego5"), ("Terraria","juego6"),
         ("Hellblade","juego7"), ("Persona 3","juego8"), ("Metal Gear Peace Walker","juego9"),
         ("The Cave","juego10"), ("GTA IV","juego11")
+    ]
+    
+    let listaLibros = [
+        ("La Biblioteca de la Media Noche", "libro4"), ("The Dark Tower", "libro1"),
+        ("Farenheit 451", "libro3"), ("The Yellow Sign", "libro2"),
+        ("El Horror de Dunwich", "libro5"), ("El Jardin de las Mariposas", "libro6")
     ]
     
     var body: some View{
@@ -101,18 +108,28 @@ struct FavoriteView: View{
                         
                         //LIBROS FAVORITOS DESLEGABLES
                         DisclosureGroup{ //Desplegable
-                            ScrollView(.horizontal, showsIndicators: false){
-                                HStack(spacing: 30){
-                                    libro(title: "La biblioteca de la media noche", img: "libro4")
-                                    libro(title: "The Dark Tower", img: "libro1")
-                                    libro(title: "Farenheit 451", img: "libro3")
-                                    libro(title: "The Yellow Sign", img: "libro2")
-                                    libro(title: "El Horror de Dunwich", img: "libro5")
-                                    libro(title: "El Jardin de las mariposas", img: "libro6")
+                            ScrollViewReader{ proxy in
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 30) {
+                                        ForEach(0..<listaLibros.count, id: \.self) { index in
+                                            libro(title: listaLibros[index].0, img: listaLibros[index].1)
+                                                .id(index)
+                                        }
+                                    }
+                                    .padding(.top, 20)
+                                    .padding(.horizontal, 20) 
                                 }
-                                .padding(.top, 20)
+                                .onReceive(timer) { _ in
+                                    withAnimation(.easeInOut(duration: 1.0)) { 
+                                        if (libroActual == 0){
+                                            libroActual = libroActual + 2
+                                        } else {
+                                            libroActual = (libroActual + 1) % (listaLibros.count - 1)
+                                        }
+                                        proxy.scrollTo(libroActual, anchor: .center)
+                                    }
+                                }
                             }
-                            
                         } label: {
                             Text("Libros Favoritos")
                                 .font(.title2)
@@ -141,7 +158,11 @@ struct FavoriteView: View{
                                 }
                                 .onReceive(timer) { _ in
                                     withAnimation(.easeInOut(duration: 1.0)) { 
-                                        juegoActual = (juegoActual + 1) % listaJuegos.count
+                                        if (juegoActual == 0){
+                                            juegoActual = juegoActual + 2
+                                        } else {
+                                            juegoActual = (juegoActual + 1) % (listaJuegos.count - 1) 
+                                        }
                                         proxy.scrollTo(juegoActual, anchor: .center)
                                     }
                                 }                                
@@ -189,7 +210,7 @@ struct FavoriteView: View{
                         Divider()
                         
                     }
-                    .frame(maxWidth: 830) 
+                    .frame(maxWidth: 850) 
                     
                 }
             }
